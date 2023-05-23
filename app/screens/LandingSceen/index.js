@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,9 @@ import {
   StyleSheet,
   Platform,
   StatusBar,
+  TouchableHighlight,
+  TouchableOpacity,
+  Icon,
 } from "react-native";
 import LocationIcon from "../../Components/Icons/LocationIcon";
 import { Button } from "react-native-elements";
@@ -13,8 +16,13 @@ import SortIcon from "../../Components/Icons/SortIcon";
 import FilterIcon from "../../Components/Icons/FilterIcon";
 import Favourites from "../../Components/Favourites";
 import SalonList from "../../Components/SalonList";
+import Sort from "../../Components/Sort";
+import Filter from "../../Components/Filter";
 
 function Landing({ navigation, route }) {
+  const [sortVisible, setSortVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.topbar}>
@@ -42,13 +50,23 @@ function Landing({ navigation, route }) {
             }}
           />
         </View>
-        <View style={styles.sort}>
-          <SortIcon width={30} height={30} color={"white"} />
+        <View style={styles.sortWrapper}>
+          <TouchableOpacity onPress={() => setSortVisible(!sortVisible)}>
+            <View style={styles.sort}>
+              <SortIcon width={30} height={30} color={"white"} />
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={styles.sort}>
-          <FilterIcon width={30} height={30} color={"white"} />
+        <View style={styles.sortWrapper}>
+          <TouchableOpacity onPress={() => navigation.navigate("Filter")}>
+            <View style={styles.sort}>
+              <FilterIcon width={30} height={30} color={"white"} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
+
+      <Sort visible={sortVisible} setVisible={setSortVisible} />
 
       <Favourites />
       <SalonList />
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     marginBottom: 2,
-    flex: 0.8,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -100,12 +118,14 @@ const styles = StyleSheet.create({
   searchWrapper: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    padding: 5,
     gap: 10,
+    backgroundColor: "white",
   },
   searchInput: {
     borderWidth: 1,
     borderColor: "black",
-    margin: 5,
     width: "60%",
     height: 40,
     justifyContent: "flex-start",
@@ -117,11 +137,15 @@ const styles = StyleSheet.create({
     // backgroundColor: "pink",
   },
 
+  sortWrapper: {
+    width: "15%",
+    flex: 1,
+    height: 40,
+  },
+
   sort: {
     justifyContent: "center",
     alignItems: "center",
-    // padding: 10,
-    width: "15%",
     height: 40,
     backgroundColor: "black",
     borderRadius: 8,

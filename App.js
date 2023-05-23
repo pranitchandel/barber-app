@@ -15,6 +15,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Landing from "./app/screens/LandingSceen";
 import SearchBar from "./app/Components/SearchBar";
+import Filter from "./app/Components/Filter";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,11 @@ export default function App() {
           <Stack.Screen
             name="Search"
             component={SearchBar}
+            // options={{ title: "Welcome" }}
+          />
+          <Stack.Screen
+            name="Filter"
+            component={Filter}
             // options={{ title: "Welcome" }}
           />
           <Stack.Screen
